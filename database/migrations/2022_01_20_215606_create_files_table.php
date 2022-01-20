@@ -15,6 +15,11 @@ class CreateFilesTable extends Migration
     {
         Schema::create('files', function (Blueprint $table) {
             $table->id();
+            $table->string('file_name');
+            $table->unsignedBigInteger('file_size');
+            $table->string('file_extension');
+            $table->foreignId('folder_id')
+                ->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
