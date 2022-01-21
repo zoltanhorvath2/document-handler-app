@@ -19,7 +19,7 @@ class FolderSeeder extends Seeder
 
         for($i = 1; $i <= $counter; $i++){
             DB::table('folders')->insert([
-                'parent_id' => 1,
+                'parent_id' => 0,
                 'folder_name' => 'Category ' . $i,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()

@@ -8,6 +8,8 @@
     <title>File Manager App</title>
     <!-- Favicon-->
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/favicon.ico') }}" />
+    {{-- FontAwesome --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="{{ url('css/styles.css') }}" rel="stylesheet" />
 </head>
@@ -32,7 +34,7 @@
         tree structure
     </div>
     <div>
-
+        
     </div>
 </div>
 <!-- Bootstrap core JS-->
