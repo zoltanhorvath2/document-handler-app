@@ -13,7 +13,7 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="{{ url('css/styles.css') }}" rel="stylesheet" />
 </head>
-<body>
+<body class="vh-100">
 <!-- Responsive navbar-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
@@ -29,17 +29,25 @@
     </div>
 </nav>
 <!-- Page content-->
-<div class="container">
-    <div class="col-8-sm">
-        <ul class="list-unstyled">
-            @foreach ( $folders as $folder )
-                <li>
-                    <a href="">{{ $folder->folder_name }}</a>
-                    <i class="fas fa-folder"></i>
-                </li>
-            @endforeach
-        </ul>
+<div class="">
+    <div class="row">
+        <div class="">
+            <div class="">
+                <h4>Main Categories</h4>
+                <ul class="list-unstyled">
+                @foreach ( $folders as $folder )
+                    <li>
+                        <i class="fas fa-folder"></i>
+                        <a class="text-reset text-decoration-none" href="">{{ $folder->folder_name }}</a>
+                    </li>
+                @endforeach
+            </ul>
+            </div>
+        </div>
     </div>
+</div>
+<div class="">
+    files
 </div>
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
