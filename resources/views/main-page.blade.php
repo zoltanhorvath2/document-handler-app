@@ -33,9 +33,9 @@
     <div class="row">
         {{-- FOLDERS WIDGET --}}
         <div class="d-flex flex-row justify-content-start" id="folders-widget">
-            <div class="">
+            <div class="column" id="category-column">
                 <h4>Main Categories</h4>
-                <ul class="list-unstyled">
+                <ul class="list-unstyled" id="folder-list-0">
                 @foreach ( $folders as $folder )
                     <li class="folder">
                         <input type="text" hidden value="{{ $folder->id }}">
@@ -49,6 +49,13 @@
 
         {{-- NEW FOLDER OR DOCUMENT UPLOADER WIDGET --}}
         <div>
+            <div id="add-new-folder">
+                <h3>Add new folder</h3>
+                <form action="" method="post">
+                    <input type="text" name="folder_name" placeholder="New folder">
+                    <button>Add folder</button>
+                </form>
+            </div>
 
         </div>
     </div>
