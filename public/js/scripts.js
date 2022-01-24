@@ -3,18 +3,27 @@ $(function(){
 
     let selectedFolderId;
 
+    //Setting up csrf tokens to post requests
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+        }
+    });
+
     //Get all data from clicked folder
     $(document).on('click', '.folder', function(){
+
+        $('#error-message').attr('hidden', true)
 
         $(this).parent().children().each(function(index, listItem){
             $(listItem).css('background-color', 'white')
         })
 
-        $(this).css('background-color', 'grey');
+        $(this).css('background-color', 'grey')
 
         let clickedFolderId = $(this).children().first().val()
-        let path = window.location.href;
-        let clickedElement = this;
+        let path = window.location.href
+        let clickedElement = this
 
         $.ajax({
             dataType: 'json',
@@ -22,7 +31,7 @@ $(function(){
             url: path + `folders/${clickedFolderId}`,
             success: function (data) {
                 /* openFolder(data, clickedElement) */
-                selectFolder(data)
+                setFolderID(data)
             },
             error: function(e){
                 console.log("some error occured")
@@ -67,10 +76,39 @@ $(function(){
     }
 
     //Select folder for file upload
-    function selectFolder(data){
-        selectedFolderId = data.clicked_folder.id
-        return selectedFolderId;
+    function setFolderID(data){
+        $('#folder_id').val(data.clicked_folder.id)
     }
+
+    //Upload document
+    $(document).on('submit', '#file-upload-form', function(e){
+        e.preventDefault()
+
+        $('#error-message').attr('hidden', true)
+
+        if(!$('#folder_id').val()){
+            $('#error-message').append(`
+                <li class="alert-danger">Please select a folder for file upload!</li>
+            `).attr('hidden', false)
+        }
+
+        let path = window.location.href
+        $.ajax({
+            dataType: 'json',
+            type: 'post',
+            url: path + `files/upload`,
+            enctype: 'multipart/form-data',
+            processData: false,
+            contentType: false,
+            data: new FormData(this),
+            success: function (data) {
+                console.log(data)
+            },
+            error: function(e){
+                console.log("some error occured")
+            }
+        })
+    })
 
 
 

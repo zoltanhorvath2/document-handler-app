@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
+    <meta name="_token" content="{{ csrf_token() }}"/>
     <title>Document Manager App</title>
     <!-- Favicon-->
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/favicon.ico') }}" />
@@ -51,10 +52,12 @@
         <div>
             <div id="add-new-folder">
                 <h3>Add new document</h3>
-                <form action="" method="post">
+                <form action="" method="post" id="file-upload-form">
                     @csrf
-                    <input type="text" name="file_name" placeholder="New folder">
+                    <input type="file" name="file" id="file">
+                    <input type="text" name="folder_id" id="folder_id" hidden value="">
                     <button>Upload document</button>
+                    <ul id="error-message" hidden></ul>
                 </form>
             </div>
 
@@ -69,6 +72,6 @@
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="{{ url("js/app.js") }}"></script>
-<script src="{{ url("js/folders.js") }}"></script>
+<script src="{{ url("js/scripts.js") }}"></script>
 </body>
 </html>
