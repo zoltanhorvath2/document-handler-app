@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="{{ url('css/styles.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
 </head>
 <body class="vh-100">
 <!-- Responsive navbar-->
@@ -64,13 +65,30 @@
         </div>
     </div>
 </div>
-<div class="">
-    files
+<div class="container">
+    <div class="row">
+        <table id="files_table" class="display" style="width: 100%">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Filename</th>
+                <th>Filesize</th>
+                <th>Type</th>
+                <th>Uploaded At</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody style="width: 100%">
+            </tbody>
+        </table>
+    </div>
 </div>
+
 {{-- Jquery Core --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
 <script src="{{ url("js/app.js") }}"></script>
 <script src="{{ url("js/scripts.js") }}"></script>
 </body>

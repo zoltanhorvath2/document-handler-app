@@ -1,8 +1,6 @@
 $(function(){
 
 
-    let selectedFolderId;
-
     //Setting up csrf tokens to post requests
     $.ajaxSetup({
         headers: {
@@ -30,8 +28,9 @@ $(function(){
             type: 'get',
             url: path + `folders/${clickedFolderId}`,
             success: function (data) {
-                /* openFolder(data, clickedElement) */
+                openFolder(data, clickedElement)
                 setFolderID(data)
+                showDatatable(data)
             },
             error: function(e){
                 console.log("some error occured")
@@ -122,6 +121,43 @@ $(function(){
             }
         })
     })
+
+    function showDatatable(data){
+        let path = window.location.href
+        var fileTable = $('#files_table').DataTable({
+            processing: true,
+            serverSide: true,
+            destroy: true,
+            pagingType: "first_last_numbers",
+            ajax: path + "files/get-by-folder/" + data.clicked_folder.id ,
+            columns: [
+                { data: 'id', name: 'id'},
+                { data: 'file_name', name: 'file_name'},
+                { data: 'file_size', name: 'file_size'},
+                { data: 'file_extension', name: 'file_extension'},
+                { data: 'created_at', name: 'created_at'},
+                {
+                    "data": null,
+                    "defaultContent":
+                        "<div class='centered-container'>" +
+                            "<button class='btn btn-primary btn-customers-edit action-button'><i class='far fa-eye'></i></button>" +
+                            "<button class='btn btn-danger btn-customers-delete action-button'><i class='far fa-trash-alt'></i></button>" +
+                        "</div>",
+                    'orderable' : false,
+                    'searchable' : false
+
+                }
+            ],
+            columnDefs: [
+                { width: "35px", targets: [0]}
+            ],
+            scrollX: true,
+            select: {
+                style: 'os',
+                items: 'row',
+            }
+        })
+    }
 
 
 

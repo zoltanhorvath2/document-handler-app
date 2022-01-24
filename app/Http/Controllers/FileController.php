@@ -6,6 +6,7 @@ use App\Models\File;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Validator;
+use Yajra\DataTables\DataTables;
 
 class FileController extends Controller
 {
@@ -49,8 +50,15 @@ class FileController extends Controller
 
         if($request->file('file')!=null){
 
+            $term = $request->file->getClientOriginalName();
+
+            $fileCheck = File::where('folder_id', $request->folder_id)
+                    ->where('file_name', 'like', "%$term%")
+                    ->get()->toArray();
+
             //Add new image name based on unix timestamp ant normalized audio title
-            $this->newDocumentName = time() . 'doc' . '.' . $request->file->getClientOriginalExtension();
+            $this->newDocumentName = !empty($fileCheck) ?
+            $request->file->getClientOriginalName() . ' (' . count($fileCheck) . ')' : $request->file->getClientOriginalName();
             //Move audio into public folder
             move_uploaded_file($request->file->getRealPath(), public_path('assets/documents/'. $this->newDocumentName));
             //File::move;
@@ -58,6 +66,12 @@ class FileController extends Controller
         }else{
             return back()->with(['error_message' => 'Hiba! A hangok feltöltése sikertelen!']);
         }
+    }
+
+    public function getByFolder($folder_id, DataTables $dataTables){
+        $files = File::where('folder_id', $folder_id)->get();
+
+        return $dataTables->of($files)->toJson();
     }
 
 }
