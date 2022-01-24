@@ -85,6 +85,7 @@ $(function(){
         e.preventDefault()
 
         $('#error-message').attr('hidden', true)
+        $('#error-message').text('')
 
         if(!$('#folder_id').val()){
             $('#error-message').append(`
@@ -102,7 +103,19 @@ $(function(){
             contentType: false,
             data: new FormData(this),
             success: function (data) {
-                console.log(data)
+                if(!data.code){
+                    $('#error-message').attr('hidden', false)
+                    for(let i = 0; i < data.error_messages.length; i++){
+                        $('#error-message').append(`
+                            <li class=alert-danger>${data.error_messages[i]}</li>
+                        `)
+                    }
+                }else{
+                    $('#error-message').attr('hidden', false)
+                    $('#error-message').append(`
+                        <li class=alert-success>${data.success_message}</li>
+                    `)
+                }
             },
             error: function(e){
                 console.log("some error occured")

@@ -2,11 +2,62 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\File;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Validator;
 
 class FileController extends Controller
 {
+
+    private $newDocumentName;
+
     public function uploadFile(Request $request){
-        var_dump($request->all());
+
+        $validator = Validator::make($request->all(), [
+
+            'folder_id' => 'required|numeric',
+            'file' => 'required|mimes:pdf,txt,doc,docx|max:10000'
+
+        ]);
+
+        if ($validator->passes()) {
+
+            $this->fileProcessor($request);
+
+            $file                 = new File();
+            $file->file_name      = $this->newDocumentName;
+            $file->file_size      = $request->file->getSize();
+            $file->file_extension = $request->file->getClientOriginalExtension();
+            $file->folder_id      = $request->folder_id;
+            $file->file_url       = asset('assets/documents') . '/' . $this->newDocumentName;
+            $file->created_at     = Carbon::now();
+            $file->updated_at     = Carbon::now();
+
+            $file->save();
+
+			return response()->json(['code' => 1, 'success_message'=>'New document has been added.']);
+
+        }
+
+
+    	return response()->json(['code' => 0, 'error_messages'=>$validator->errors()->all()]);
+
     }
+
+    public function fileProcessor($request){
+
+        if($request->file('file')!=null){
+
+            //Add new image name based on unix timestamp ant normalized audio title
+            $this->newDocumentName = time() . 'doc' . '.' . $request->file->getClientOriginalExtension();
+            //Move audio into public folder
+            move_uploaded_file($request->file->getRealPath(), public_path('assets/documents/'. $this->newDocumentName));
+            //File::move;
+
+        }else{
+            return back()->with(['error_message' => 'Hiba! A hangok feltöltése sikertelen!']);
+        }
+    }
+
 }
