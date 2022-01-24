@@ -6,6 +6,7 @@ use App\Models\File;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Validator;
+use Yajra\DataTables\DataTables;
 
 class FileController extends Controller
 {
@@ -65,6 +66,12 @@ class FileController extends Controller
         }else{
             return back()->with(['error_message' => 'Hiba! A hangok feltöltése sikertelen!']);
         }
+    }
+
+    public function getByFolder($folder_id, DataTables $dataTables){
+        $files = File::where('folder_id', $folder_id)->get();
+
+        return $dataTables->of($files)->toJson();
     }
 
 }
