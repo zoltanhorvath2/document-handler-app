@@ -18,6 +18,7 @@ class CreateFilesTable extends Migration
             $table->string('file_name');
             $table->unsignedBigInteger('file_size');
             $table->string('file_extension');
+            $table->string('file_url');
             $table->foreignId('folder_id')
                 ->constrained()->onDelete('cascade');
             $table->timestamps();

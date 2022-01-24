@@ -10,7 +10,7 @@ class PageController extends Controller
     public function index ()
 
     {
-        $folders = Folder::all();
+        $folders = Folder::where('parent_id', 0)->get();
 
         $data = [
             'folders' => $folders
