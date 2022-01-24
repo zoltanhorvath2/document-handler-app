@@ -64,9 +64,25 @@
         </div>
     </div>
 </div>
-<div class="">
-    files
+<div class="container">
+    <div class="row">
+        <table id="files_table" class="display" style="width: 100%">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Filenév</th>
+                <th>Méret</th>
+                <th>Típus</th>
+                <th>Létrehozva</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody style="width: 100%">
+            </tbody>
+        </table>
+    </div>
 </div>
+
 {{-- Jquery Core --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
 <!-- Bootstrap core JS-->

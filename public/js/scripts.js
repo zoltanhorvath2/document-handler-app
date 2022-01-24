@@ -1,8 +1,6 @@
 $(function(){
 
 
-    let selectedFolderId;
-
     //Setting up csrf tokens to post requests
     $.ajaxSetup({
         headers: {
@@ -30,7 +28,7 @@ $(function(){
             type: 'get',
             url: path + `folders/${clickedFolderId}`,
             success: function (data) {
-                /* openFolder(data, clickedElement) */
+                openFolder(data, clickedElement)
                 setFolderID(data)
             },
             error: function(e){
