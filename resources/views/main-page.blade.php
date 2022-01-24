@@ -38,7 +38,7 @@
                 <ul class="list-unstyled" id="folder-list-0">
                 @foreach ( $folders as $folder )
                     <li class="folder">
-                        <input type="text" hidden value="{{ $folder->id }}">
+                        <input id="folder-id" type="text" hidden value="{{ $folder->id }}">
                         <i class="fas fa-folder"></i>
                         <a class="text-reset text-decoration-none">{{ $folder->folder_name }}</a>
                     </li>
@@ -50,10 +50,11 @@
         {{-- NEW FOLDER OR DOCUMENT UPLOADER WIDGET --}}
         <div>
             <div id="add-new-folder">
-                <h3>Add new folder</h3>
+                <h3>Add new document</h3>
                 <form action="" method="post">
-                    <input type="text" name="folder_name" placeholder="New folder">
-                    <button>Add folder</button>
+                    @csrf
+                    <input type="text" name="file_name" placeholder="New folder">
+                    <button>Upload document</button>
                 </form>
             </div>
 

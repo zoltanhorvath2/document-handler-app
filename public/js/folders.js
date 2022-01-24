@@ -1,7 +1,7 @@
 $(function(){
 
 
-    let parentID;
+    let selectedFolderId;
 
     //Get all data from clicked folder
     $(document).on('click', '.folder', function(){
@@ -21,7 +21,8 @@ $(function(){
             type: 'get',
             url: path + `folders/${clickedFolderId}`,
             success: function (data) {
-                openFolder(data, clickedElement)
+                /* openFolder(data, clickedElement) */
+                selectFolder(data)
             },
             error: function(e){
                 console.log("some error occured")
@@ -55,7 +56,7 @@ $(function(){
         for(let i = 0; i < data.subfolders.length; i++){
             $("#folder-list-" + data.clicked_folder.id).append(`
                 <li class="folder">
-                    <input type="text" hidden value="${ data.subfolders[i].id }}">
+                    <input id="folder-id" type="text" hidden value="${ data.subfolders[i].id }}">
                     <i class="fas fa-folder"></i>
                     <a class="text-reset text-decoration-none">${ data.subfolders[i].folder_name }</a>
                 </li>
@@ -63,6 +64,12 @@ $(function(){
         }
 
 
+    }
+
+    //Select folder for file upload
+    function selectFolder(data){
+        selectedFolderId = data.clicked_folder.id
+        return selectedFolderId;
     }
 
 
