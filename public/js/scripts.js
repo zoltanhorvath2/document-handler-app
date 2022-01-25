@@ -114,8 +114,8 @@ $(function(){
                     $('#error-message').append(`
                         <li class=alert-success>${data.success_message}</li>
                     `)
-                    console.log(data.folder_id)
                     drawDatatable(data.folder_id)
+                    $('#file').val(null)
                 }
             },
             error: function(e){
@@ -140,14 +140,18 @@ $(function(){
                 { data: 'file_extension', name: 'file_extension'},
                 { data: 'created_at', name: 'created_at'},
                 {
-                    "data": null,
-                    "defaultContent":
-                        "<div class='centered-container'>" +
-                            "<button class='btn btn-primary btn-customers-edit action-button'><i class='far fa-eye'></i></button>" +
-                            "<button class='btn btn-danger btn-customers-delete action-button'><i class='far fa-trash-alt'></i></button>" +
-                        "</div>",
-                    'orderable' : false,
-                    'searchable' : false
+                    data: 'file_url',
+                    orderable : false,
+                    searchable : false,
+                    'render': function(data){
+                        return "<div class='centered-container'>" +
+                        "<button class='btn btn-primary btn-show mr-2'><i class='far fa-eye'></i></button>" +
+                        "<a download href=" +
+                            data
+                        +" class='btn-download' target='_blank'><button class='btn btn-warning text-light mr-2'><i class='fas fa-download'></i></button></a>" +
+                        "<button class='btn btn-danger btn-delete mr-2'><i class='far fa-trash-alt'></i></button>" +
+                        "</div>"
+                    }
 
                 }
             ],
@@ -160,6 +164,16 @@ $(function(){
                 items: 'row',
             }
         })
+
+        //Show file in a modal
+        $('#files_table').on('click', '.btn-show', function (e){
+            e.preventDefault()
+            const rowData = fileTable.row( $(this).parents('tr') ).data()
+            console.log(rowData)
+            window.open(rowData.file_url)
+            return false
+        })
+
     }
 
 
