@@ -30,7 +30,7 @@ $(function(){
             success: function (data) {
                 openFolder(data, clickedElement)
                 setFolderID(data)
-                showDatatable(data)
+                drawDatatable(data.clicked_folder.id)
             },
             error: function(e){
                 console.log("some error occured")
@@ -114,6 +114,8 @@ $(function(){
                     $('#error-message').append(`
                         <li class=alert-success>${data.success_message}</li>
                     `)
+                    console.log(data.folder_id)
+                    drawDatatable(data.folder_id)
                 }
             },
             error: function(e){
@@ -122,14 +124,15 @@ $(function(){
         })
     })
 
-    function showDatatable(data){
+    //Drawing files table
+    function drawDatatable(folderID){
         let path = window.location.href
         var fileTable = $('#files_table').DataTable({
             processing: true,
             serverSide: true,
             destroy: true,
             pagingType: "first_last_numbers",
-            ajax: path + "files/get-by-folder/" + data.clicked_folder.id ,
+            ajax: path + "files/get-by-folder/" + folderID ,
             columns: [
                 { data: 'id', name: 'id'},
                 { data: 'file_name', name: 'file_name'},

@@ -37,8 +37,11 @@ class FileController extends Controller
 
             $file->save();
 
-			return response()->json(['code' => 1, 'success_message'=>'New document has been added.']);
-
+			return response()->json([
+                'code' => 1,
+                'success_message'=>'New document has been added.',
+                'folder_id' => $request->folder_id
+            ]);
         }
 
 

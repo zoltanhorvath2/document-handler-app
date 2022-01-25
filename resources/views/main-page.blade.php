@@ -31,7 +31,7 @@
     </div>
 </nav>
 <!-- Page content-->
-<div class="">
+<div class="container">
     <div class="row">
         {{-- FOLDERS WIDGET --}}
         <div class="d-flex flex-row justify-content-start" id="folders-widget">
