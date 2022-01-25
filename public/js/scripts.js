@@ -30,6 +30,7 @@ $(function(){
             success: function (data) {
                 openFolder(data, clickedElement)
                 setFolderID(data)
+                destroyTable(drawDatatable(data.clicked_folder.id))
                 drawDatatable(data.clicked_folder.id)
             },
             error: function(e){
@@ -43,7 +44,6 @@ $(function(){
     function openFolder(data, clickedElement){
 
         let widgetColumns = $(clickedElement).parent().parent().parent().children().length
-        console.log(widgetColumns)
 
         if(widgetColumns > 1){
             $("#folders-widget").children().last().remove()
@@ -114,6 +114,7 @@ $(function(){
                     $('#error-message').append(`
                         <li class=alert-success>${data.success_message}</li>
                     `)
+                    destroyTable(drawDatatable(data.folder_id))
                     drawDatatable(data.folder_id)
                     $('#file').val(null)
                 }
@@ -126,6 +127,7 @@ $(function(){
 
     //Drawing files table
     function drawDatatable(folderID){
+
         let path = window.location.href
         var fileTable = $('#files_table').DataTable({
             processing: true,
@@ -145,10 +147,13 @@ $(function(){
                     searchable : false,
                     'render': function(data){
                         return "<div class='centered-container'>" +
-                        "<button class='btn btn-primary btn-show mr-2'><i class='far fa-eye'></i></button>" +
+                        "<a href=" +
+                            data +
+                        " class='btn-show' target='_blank'>" +
+                        "<button class='btn btn-primary mr-2'><i class='far fa-eye'></i></button>" +
                         "<a download href=" +
-                            data
-                        +" class='btn-download' target='_blank'><button class='btn btn-warning text-light mr-2'><i class='fas fa-download'></i></button></a>" +
+                            data +
+                        " class='btn-download' target='_blank'><button class='btn btn-warning text-light mr-2'><i class='fas fa-download'></i></button></a>" +
                         "<button class='btn btn-danger btn-delete mr-2'><i class='far fa-trash-alt'></i></button>" +
                         "</div>"
                     }
@@ -165,18 +170,18 @@ $(function(){
             }
         })
 
-        //Show file in a modal
-        $('#files_table').on('click', '.btn-show', function (e){
-            e.preventDefault()
-            const rowData = fileTable.row( $(this).parents('tr') ).data()
-            console.log(rowData)
-            window.open(rowData.file_url)
-            return false
-        })
+        return fileTable
 
     }
 
+    function destroyTable(table){
+        table.destroy()
+    }
 
-
+    $(document).on('click', '.btn-delete', function(e){
+        e.preventDefault()
+        const rowID = $(this).closest('tr').children().first().text();
+        console.log(rowID)
+    })
 
 })

@@ -59,9 +59,11 @@ class FileController extends Controller
                     ->where('file_name', 'like', "%$term%")
                     ->get()->toArray();
 
-            //Add new image name based on unix timestamp ant normalized audio title
+
+            $originalName = str_replace(' ', '', $request->file->getClientOriginalName());
+
             $this->newDocumentName = !empty($fileCheck) ?
-            $request->file->getClientOriginalName() . ' (' . count($fileCheck) . ')' : $request->file->getClientOriginalName();
+            $originalName . ' (' . count($fileCheck) . ')' : $originalName;
             //Move audio into public folder
             move_uploaded_file($request->file->getRealPath(), public_path('assets/documents/'. $this->newDocumentName));
             //File::move;
@@ -75,6 +77,10 @@ class FileController extends Controller
         $files = File::where('folder_id', $folder_id)->get();
 
         return $dataTables->of($files)->toJson();
+    }
+
+    public function deleteFile(Request $request){
+        
     }
 
 }
