@@ -143,8 +143,9 @@ $(function(){
                     "data": null,
                     "defaultContent":
                         "<div class='centered-container'>" +
-                            "<button class='btn btn-primary btn-customers-edit action-button'><i class='far fa-eye'></i></button>" +
-                            "<button class='btn btn-danger btn-customers-delete action-button'><i class='far fa-trash-alt'></i></button>" +
+                            "<button class='btn btn-primary btn-show mr-2'><i class='far fa-eye'></i></button>" +
+                            "<button class='btn btn-warning text-light btn-download mr-2'><i class='fas fa-download'></i></button>" +
+                            "<button class='btn btn-danger btn-delete mr-2'><i class='far fa-trash-alt'></i></button>" +
                         "</div>",
                     'orderable' : false,
                     'searchable' : false
@@ -159,6 +160,13 @@ $(function(){
                 style: 'os',
                 items: 'row',
             }
+        })
+
+        //Show file in a modal
+        $('#files_table').on('click', '.btn-show', function (){
+            const rowData = fileTable.row( $(this).parents('tr') ).data()
+            window.open(rowData.file_url)
+            return false
         })
     }
 
