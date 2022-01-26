@@ -17,9 +17,10 @@ $(function(){
             $(listItem).css('background-color', 'white')
         })
 
-        $(this).css('background-color', 'grey')
+        $(this).css('background-color', 'lightgrey')
 
         let clickedFolderId = $(this).children().first().val()
+        console.log(clickedFolderId)
         let path = window.location.href
         let clickedElement = this
 
@@ -53,7 +54,7 @@ $(function(){
 
         //Make subfolder container
         $("#folders-widget").append(`
-            <div class="column" id="category-column-${data.clicked_folder.id}">
+            <div class="column me-2 px-2 overflow-scroll" id="category-column-${data.clicked_folder.id}">
                 <input type="text" value="${data.clicked_folder.id}" hidden>
                 <h4>${data.clicked_folder.folder_name}</h4>
                 <ul class="list-unstyled" id="folder-list-${data.clicked_folder.id}">
@@ -64,9 +65,9 @@ $(function(){
 
         for(let i = 0; i < data.subfolders.length; i++){
             $("#folder-list-" + data.clicked_folder.id).append(`
-                <li class="folder">
-                    <input id="folder-id" type="text" hidden value="${ data.subfolders[i].id }}">
-                    <i class="fas fa-folder"></i>
+                <li class="folder px-1">
+                    <input id="folder-id" type="text" hidden value="${ data.subfolders[i].id }">
+                    <i class="fas fa-folder me-3"></i>
                     <a class="text-reset text-decoration-none">${ data.subfolders[i].folder_name }</a>
                 </li>
             `)
@@ -113,7 +114,7 @@ $(function(){
                 }else{
                     $('#error-message').attr('hidden', false)
                     $('#error-message').append(`
-                        <li class=alert-success>${data.success_message}</li>
+                        <span class=alert-success>${data.success_message}</span>
                     `)
                     destroyTable(drawDatatable(data.folder_id))
                     drawDatatable(data.folder_id)
@@ -150,12 +151,12 @@ $(function(){
                         return "<div class='centered-container'>" +
                         "<a href=" +
                             data +
-                        " class='btn-show' target='_blank'>" +
-                        "<button class='btn btn-primary mr-2'><i class='far fa-eye'></i></button>" +
+                        " class='btn-show me-1' target='_blank'>" +
+                        "<button class='btn btn-primary'><i class='far fa-eye'></i></button>" +
                         "<a download href=" +
                             data +
-                        " class='btn-download' target='_blank'><button class='btn btn-warning text-light mr-2'><i class='fas fa-download'></i></button></a>" +
-                        "<button class='btn btn-danger btn-delete mr-2'><i class='far fa-trash-alt'></i></button>" +
+                        " class='btn-download me-1' target='_blank'><button class='btn btn-warning text-light'><i class='fas fa-download'></i></button></a>" +
+                        "<button class='btn btn-danger btn-delete'><i class='far fa-trash-alt'></i></button>" +
                         "</div>"
                     }
 

@@ -87,8 +87,10 @@ class FileController extends Controller
         $fileName = File::find($request->file_id)
             ->value('file_name');
 
-        $folderId = File::find($request->file_id)
-            ->value('folder_id');
+        //this could be a hasOne() in model but I am in hurry :((
+        $folderId = File::select('folder_id')
+                    ->where('id', '=', $request->file_id)
+                    ->value('folder_id');
 
         $recordDeletion = File::find($request->file_id)->delete();
         $path = public_path('assets/documents/');

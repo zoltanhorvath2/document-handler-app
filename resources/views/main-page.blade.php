@@ -13,35 +13,28 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="{{ url('css/styles.css') }}" rel="stylesheet" />
+    <link href="{{ url('css/app.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
 </head>
 <body class="vh-100">
 <!-- Responsive navbar-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="#">Document Manager App</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Users</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Documents</a></li>
-                    <li class="nav-item "><a class="nav-link" href="#">Log Out</a></li>
-            </ul>
-        </div>
+        <a class="navbar-brand" href="{{ url('/')}}">Document Manager App</a>
     </div>
 </nav>
 <!-- Page content-->
-<div class="container">
-    <div class="row">
+<div class="container mt-4">
+    <div class="row mt-4">
         {{-- FOLDERS WIDGET --}}
         <div class="d-flex flex-row justify-content-start" id="folders-widget">
-            <div class="column" id="category-column">
+            <div class="column me-2 px-2 overflow-scroll" id="category-column">
                 <h4>Main Categories</h4>
                 <ul class="list-unstyled" id="folder-list-0">
                 @foreach ( $folders as $folder )
-                    <li class="folder">
+                    <li class="folder px-1">
                         <input id="folder-id" type="text" hidden value="{{ $folder->id }}">
-                        <i class="fas fa-folder"></i>
+                        <i class="fas fa-folder me-3"></i>
                         <a class="text-reset text-decoration-none">{{ $folder->folder_name }}</a>
                     </li>
                 @endforeach
@@ -50,14 +43,17 @@
         </div>
 
         {{-- NEW FOLDER OR DOCUMENT UPLOADER WIDGET --}}
-        <div>
+        <div class="my-4">
             <div id="add-new-folder">
                 <h3>Add new document</h3>
-                <form action="" method="post" id="file-upload-form">
+                <form action=""
+                      method="post"
+                      id="file-upload-form"
+                      class="d-flex flex-column">
                     @csrf
-                    <input type="file" name="file" id="file">
+                    <input type="file" name="file" id="file" class="mb-2">
                     <input type="text" name="folder_id" id="folder_id" hidden value="">
-                    <button>Upload document</button>
+                    <button class="btn btn-success"> <i class="fas fa-upload"></i> Upload document</button>
                     <ul id="error-message" hidden></ul>
                 </form>
             </div>
@@ -72,7 +68,7 @@
             <tr>
                 <th>ID</th>
                 <th>Filename</th>
-                <th>Filesize</th>
+                <th>Filesize (kB)</th>
                 <th>Type</th>
                 <th>Uploaded At</th>
                 <th></th>

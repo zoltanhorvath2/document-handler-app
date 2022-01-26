@@ -1,1 +1,11 @@
+#folders-widget {
+    max-height: 400px;
+}
 
+.folder {
+    cursor: pointer;
+}
+
+#file-upload-form {
+    max-width: 250px;
+}

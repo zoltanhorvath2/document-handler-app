@@ -15,7 +15,7 @@ class FolderSeeder extends Seeder
      */
     public function run()
     {
-        $counter = 15;
+        $counter = 10;
 
         for($i = 1; $i <= $counter; $i++){
             DB::table('folders')->insert([
