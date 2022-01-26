@@ -25,5 +25,14 @@ class FolderSeeder extends Seeder
                 'updated_at' => Carbon::now()
             ]);
         }
+
+        for($i = 1; $i <= $counter; $i++){
+            DB::table('folders')->insert([
+                'parent_id' => $i,
+                'folder_name' => 'Subfolder1',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]);
+        }
     }
 }

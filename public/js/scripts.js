@@ -43,10 +43,11 @@ $(function(){
     //Open folder with subfolders
     function openFolder(data, clickedElement){
 
-        let widgetColumns = $(clickedElement).parent().parent().parent().children().length
+        let widgetColumns = $(clickedElement).closest('#folders-widget').children().length
+        let clickedElementIndex = $(clickedElement).closest('.column').index()
 
-        if(widgetColumns > 1){
-            $("#folders-widget").children().last().remove()
+        for(let i = widgetColumns; i > clickedElementIndex; i--){
+            $('#folders-widget').children().eq(i).remove();
         }
 
 

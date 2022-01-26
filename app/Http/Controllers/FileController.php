@@ -53,17 +53,21 @@ class FileController extends Controller
 
         if($request->file('file')!=null){
 
-            $term = $request->file->getClientOriginalName();
+            //Replace all whitespaces from filename
+            $inputName = str_replace(' ', '', $request->file->getClientOriginalName());
+            $extension = $request->file->getClientOriginalExtension();
 
+            $fileName = explode('.' . $extension, $inputName)[0];
+
+            //Check if the filename exists in the folder alread
             $fileCheck = File::where('folder_id', $request->folder_id)
-                    ->where('file_name', 'like', "%$term%")
+                    ->where('file_name', 'like', "%$fileName%")
                     ->get()->toArray();
 
-
-            $originalName = str_replace(' ', '', $request->file->getClientOriginalName());
-
+            //Add index to existing filename
             $this->newDocumentName = !empty($fileCheck) ?
-            $originalName . ' (' . count($fileCheck) . ')' : $originalName;
+            $fileName . '(' . (count($fileCheck) + 1) . ').' . $extension : $inputName;
+
             //Move audio into public folder
             move_uploaded_file($request->file->getRealPath(), public_path('assets/documents/'. $this->newDocumentName));
             //File::move;
