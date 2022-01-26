@@ -53,7 +53,7 @@
                     @csrf
                     <input type="file" name="file" id="file" class="mb-2">
                     <input type="text" name="folder_id" id="folder_id" hidden value="">
-                    <button class="btn btn-success"> <i class="fas fa-upload"></i> Upload document</button>
+                    <button class="btn btn-success mb-2"> <i class="fas fa-upload"></i> Upload document</button>
                     <ul id="error-message" hidden></ul>
                 </form>
             </div>
