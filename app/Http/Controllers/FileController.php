@@ -80,7 +80,25 @@ class FileController extends Controller
     }
 
     public function deleteFile(Request $request){
-        
+        $fileName = File::find($request->file_id)
+            ->value('file_name');
+
+        $folderId = File::find($request->file_id)
+            ->value('folder_id');
+
+        $recordDeletion = File::find($request->file_id)->delete();
+        $path = public_path('assets/documents/');
+
+        if(file_exists($path . $fileName)){
+            $storageDeletion = unlink($path . $fileName);
+            if($storageDeletion && $recordDeletion){
+                return response()->json(['code' => 1,'folder_id' => $folderId, 'success_message' => 'A fájl törlése sikeres!']);
+            }else{
+                return response()->json(['code' => 0, 'folder_id' => $folderId,'success_message' => 'A fájl törlése sikertelen!']);
+            }
+        }else{
+            return response()->json(['code' => 0, 'folder_id' => $folderId,'error_message' => 'A fájl nem létezik!']);
+        }
     }
 
 }

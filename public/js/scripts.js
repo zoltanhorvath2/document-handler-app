@@ -181,7 +181,21 @@ $(function(){
     $(document).on('click', '.btn-delete', function(e){
         e.preventDefault()
         const rowID = $(this).closest('tr').children().first().text();
-        console.log(rowID)
+        let path = window.location.href
+        $.ajax({
+            url: path + "files/delete",
+            method: "POST",
+            data: { file_id : rowID },
+            dataType: "json",
+            success: function(data){
+                destroyTable(drawDatatable(data.folder_id))
+                drawDatatable(data.folder_id)
+            },
+            error: function(e){
+                console.log(e)
+            }
+
+        });
     })
 
 })

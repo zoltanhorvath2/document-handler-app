@@ -21,3 +21,4 @@ Route::get('/', [PageController::class, 'index']);
 Route::get('/folders/{id}', [FolderController::class, 'getOneFolder']);
 Route::post('/files/upload', [FileController::class, 'uploadFile']);
 Route::get('/files/get-by-folder/{folder_id}', [FileController::class, 'getByFolder']);
+Route::post('/files/delete', [FileController::class, 'deleteFile']);
