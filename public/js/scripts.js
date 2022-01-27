@@ -179,10 +179,12 @@ $(function(){
 
     }
 
+    //Destroy previous DataTable instance
     function destroyTable(table){
         table.destroy()
     }
 
+    //Delete a document
     $(document).on('click', '.btn-delete', function(e){
         e.preventDefault()
         const rowID = $(this).closest('tr').children().first().text();
