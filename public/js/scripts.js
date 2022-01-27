@@ -8,10 +8,13 @@ $(function(){
         }
     });
 
+    $('#files_table').attr('hidden', true)
+
     //Get all data from clicked folder
     $(document).on('click', '.folder', function(){
 
         $('#error-message').attr('hidden', true)
+        $('#files_table').attr('hidden', false)
 
         $(this).parent().children().each(function(index, listItem){
             $(listItem).css('background-color', 'white')
