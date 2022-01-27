@@ -67,7 +67,7 @@ class FileController extends Controller
 
             //Add index to existing filename
             $this->newDocumentName = !empty($fileCheck) ?
-            $fileName . '_f_' . $request->folder_id . '_(' . (count($fileCheck) + 1) . ').'
+            $fileName . '_f' . $request->folder_id . '_(' . (count($fileCheck) + 1) . ').'
              . $extension : $fileName . '_f' . $request->folder_id . '.' . $extension;
 
             //Recheck if the new name is also in the database already
@@ -81,13 +81,12 @@ class FileController extends Controller
                 . $extension;
             }
 
-
-            //Move audio into public folder
+            //Move document into public folder
             move_uploaded_file($request->file->getRealPath(), public_path('assets/documents/'. $this->newDocumentName));
             //File::move;
 
         }else{
-            return back()->with(['error_message' => 'Hiba! A hangok feltöltése sikertelen!']);
+            return back()->with(['error_message' => 'Hiba! A dokumentum feltöltése sikertelen!']);
         }
     }
 
@@ -98,10 +97,11 @@ class FileController extends Controller
     }
 
     public function deleteFile(Request $request){
-        $fileName = File::find($request->file_id)
+        $fileName = File::select('file_name')
+            ->where('id', $request->file_id)
             ->value('file_name');
 
-        //this could be a hasOne() in model but I am in hurry :((
+        //this could be a hasOne() in model
         $folderId = File::select('folder_id')
                     ->where('id', '=', $request->file_id)
                     ->value('folder_id');
