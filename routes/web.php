@@ -17,12 +17,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [PageController::class, 'index']);
+// Experimental route, for attaching the vue.js instance
+Route::view('/', 'home');
+
+// Old routes
+/* Route::get('/', [PageController::class, 'index']); */
 Route::get('/folders/{id}', [FolderController::class, 'getOneFolder']);
 Route::post('/files/upload', [FileController::class, 'uploadFile']);
 Route::get('/files/get-by-folder/{folder_id}', [FileController::class, 'getByFolder']);
 Route::post('/files/delete', [FileController::class, 'deleteFile']);
-
-Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
